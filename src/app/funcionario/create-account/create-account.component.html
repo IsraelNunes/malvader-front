@@ -4,11 +4,8 @@
   <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="id_cliente">Cliente:</label>
-      <!-- Dropdown para selecionar o cliente -->
       <select id="id_cliente" formControlName="id_cliente">
         <option [ngValue]="null" disabled>Selecione um cliente</option>
-        <!-- Itera sobre a lista de clientes obtida do backend -->
-        <!-- [ngValue]="user.id_usuario" usa a propriedade 'id_usuario' do JSON do backend para o valor real -->
         <option *ngFor="let user of usuariosClientes" [ngValue]="user.id_usuario">{{ user.nome }} (CPF: {{ user.cpf }})</option>
       </select>
       <div *ngIf="accountForm.get('id_cliente')?.invalid && accountForm.get('id_cliente')?.touched" class="error-message">
@@ -18,12 +15,9 @@
 
     <div class="form-group">
       <label for="id_agencia">Agência:</label>
-      <!-- Dropdown para selecionar a agência -->
       <select id="id_agencia" formControlName="id_agencia">
         <option [ngValue]="null" disabled>Selecione uma agência</option>
-        <!-- Itera sobre a lista de agências obtida do backend -->
-        <!-- [ngValue]="agencia.id_agencia" usa a propriedade 'id_agencia' do JSON do backend para o valor real -->
-        <option *ngFor="let agencia of agencias" [ngValue]="agencia.id_agencia">{{ agencia.nome }} (Cód: {{ agencia.codigo_agencia }})</option>
+        <option *ngFor="let agencia of agencias" [ngValue]="agencia.idAgencia">{{ agencia.nome }} (Cód: {{ agencia.codigo_agencia }})</option>
       </select>
       <div *ngIf="accountForm.get('id_agencia')?.invalid && accountForm.get('id_agencia')?.touched" class="error-message">
         Agência é obrigatória.
@@ -32,7 +26,6 @@
 
     <div class="form-group">
       <label for="tipo_conta">Tipo de Conta:</label>
-      <!-- Dropdown para selecionar o tipo de conta -->
       <select id="tipo_conta" formControlName="tipo_conta">
         <option *ngFor="let tipo of tiposConta" [ngValue]="tipo">{{ tipo }}</option>
       </select>
@@ -50,7 +43,6 @@
       </div>
     </div>
 
-    <!-- Campos condicionais para Conta Poupança -->
     <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'POUPANCA'">
       <div class="form-group">
         <label for="taxa_rendimento">Taxa de Rendimento (%):</label>
@@ -62,7 +54,6 @@
       </div>
     </ng-container>
 
-    <!-- Campos condicionais para Conta Corrente -->
     <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'CORRENTE'">
       <div class="form-group">
         <label for="limite">Limite de Crédito:</label>
@@ -89,7 +80,6 @@
       </div>
     </ng-container>
 
-    <!-- Campos condicionais para Conta Investimento -->
     <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'INVESTIMENTO'">
       <div class="form-group">
         <label for="perfil_risco">Perfil de Risco:</label>

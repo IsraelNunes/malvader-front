@@ -32,17 +32,21 @@
         <tr *ngFor="let entity of entities">
           <td>{{ entity.id_usuario }}</td>
           <td>{{ entity.nome }}</td>
-          <td>{{ entity.cpf }}</td> <td>{{ entity.tipoUsuario }}</td> <td>{{ entity.telefone }}</td>
+          <td>{{ entity.cpf }}</td>
+          <td>{{ entity.tipoUsuario }}</td>
+          <td>{{ entity.telefone }}</td>
           <td>{{ entity.email }}</td>
-          <td>{{ entity.dataNascimento }}</td> </tr>
+          <td>{{ entity.dataNascimento }}</td>
+        </tr>
       </ng-container>
       <ng-container *ngIf="type === 'contas'">
         <tr *ngFor="let entity of entities">
-          <td>{{ entity.id_conta }}</td>
-          <td>{{ entity.numero_conta }}</td>
+          <!-- AJUSTE AQUI COM BASE NA RESPOSTA DA API -->
+          <td>{{ entity.id_conta || entity.idConta }}</td> <!-- Tenta id_conta (snake) e idConta (camel) -->
+          <td>{{ entity.numero_conta || entity.numeroConta }}</td> <!-- Tenta numero_conta (snake) e numeroConta (camel) -->
           <td>R$ {{ entity.saldo | number:'1.2-2' }}</td>
-          <td>{{ entity.tipo_conta }}</td>
-          <td>{{ entity.id_cliente }}</td>
+          <td>{{ entity.tipo_conta || entity.tipoConta }}</td> <!-- Ajuste aqui se o backend retorna tipoConta -->
+          <td>{{ entity.id_cliente || entity.idCliente || entity.Usuario_idUsuario }}</td> <!-- Tenta diferentes nomes para FK do cliente -->
           <td>{{ entity.status }}</td>
         </tr>
       </ng-container>

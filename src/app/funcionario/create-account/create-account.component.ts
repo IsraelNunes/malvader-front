@@ -1,10 +1,11 @@
 // front/malvader-frontend/src/app/funcionario/create-account/create-account.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ContaService } from '../../services/conta.service'; // Serviço para operações de conta
-import { UsuarioService } from '../../services/usuario.service'; // Serviço para buscar usuários (clientes)
-import { AgenciaService } from '../../services/agencia.service'; // Serviço para buscar agências
-import { AuthService } from '../../auth/auth.service'; // Serviço de autenticação
+import { ContaService } from '../../services/conta.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { AgenciaService } from '../../services/agencia.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-create-account',
@@ -12,82 +13,71 @@ import { AuthService } from '../../auth/auth.service'; // Serviço de autentica�
   styleUrls: ['./create-account.component.scss']
 })
 export class CreateAccountComponent implements OnInit {
-  accountForm!: FormGroup; // FormGroup para o formulário de conta
-  errorMessage: string = ''; // Mensagem de erro para o usuário
-  successMessage: string = ''; // Mensagem de sucesso para o usuário
+  accountForm!: FormGroup;
+  errorMessage: string = '';
+  successMessage: string = '';
 
-  // Opções para os dropdowns e validações
   tiposConta: string[] = ['POUPANCA', 'CORRENTE', 'INVESTIMENTO'];
   perfisRisco: string[] = ['BAIXO', 'MEDIO', 'ALTO'];
-  
-  // Listas de dados do backend para popular dropdowns
-  usuariosClientes: any[] = []; // Armazena usuários do tipo CLIENTE
-  agencias: any[] = []; // Armazena agências
+
+  usuariosClientes: any[] = [];
+  agencias: any[] = [];
 
   constructor(
-    private fb: FormBuilder, // Injetor de FormBuilder para criar o formulário
-    private contaService: ContaService, // Injetor do serviço de contas
-    private usuarioService: UsuarioService, // Injetor do serviço de usuários
-    private agenciaService: AgenciaService, // Injetor do serviço de agências
-    private authService: AuthService // Injetor do serviço de autenticação
+    private fb: FormBuilder,
+    private contaService: ContaService,
+    private usuarioService: UsuarioService,
+    private agenciaService: AgenciaService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.initAccountForm(); // Inicializa a estrutura do formulário
-    this.loadDependencies(); // Carrega os dados de clientes e agências
+    this.initAccountForm();
+    this.loadDependencies();
+
+    this.accountForm.get('id_agencia')?.valueChanges.subscribe(value => {
+      console.log('DEBUG: id_agencia valor alterado:', value);
+      console.log('DEBUG: id_agencia status do controle:', this.accountForm.get('id_agencia')?.status);
+      console.log('DEBUG: id_agencia erros:', this.accountForm.get('id_agencia')?.errors);
+    });
   }
 
-  /**
-   * Inicializa a estrutura do formulário reativo com campos e validações.
-   */
   initAccountForm(): void {
     this.accountForm = this.fb.group({
-      // Campos obrigatórios para todas as contas
-      id_cliente: [null, Validators.required], // ID do cliente (FK)
-      id_agencia: [null, Validators.required], // ID da agência (FK)
-      tipo_conta: ['POUPANCA', Validators.required], // Tipo de conta, com valor inicial 'POUPANCA'
-      saldo: [0, [Validators.required, Validators.min(0)]], // Saldo inicial, mínimo 0
-
-      // Campos específicos para cada tipo de conta (inicializados como null)
-      taxa_rendimento: [null], // Poupança
-      ultimo_rendimento: [null], // Poupança
-      limite: [null], // Corrente
-      data_vencimento: [null], // Corrente
-      taxa_manutencao: [null], // Corrente
-      perfil_risco: [null], // Investimento
-      valor_minimo: [null], // Investimento
-      taxa_rendimento_base: [null] // Investimento
+      id_cliente: [null, Validators.required],
+      id_agencia: [null, Validators.required],
+      tipo_conta: ['POUPANCA', Validators.required],
+      saldo: [0, [Validators.required, Validators.min(0)]],
+      taxa_rendimento: [null],
+      ultimo_rendimento: [null],
+      limite: [null],
+      data_vencimento: [null],
+      taxa_manutencao: [null],
+      perfil_risco: [null],
+      valor_minimo: [null],
+      taxa_rendimento_base: [null]
     });
 
-    // Observa mudanças no campo 'tipo_conta' para aplicar validações condicionais
     this.accountForm.get('tipo_conta')?.valueChanges.subscribe(type => {
       this.setConditionalValidators(type);
     });
-    // Define as validações iniciais para o tipo de conta padrão (POUPANCA)
-    this.setConditionalValidators('POUPANCA'); 
+    this.setConditionalValidators('POUPANCA');
   }
 
-  /**
-   * Define validadores para campos específicos do formulário com base no tipo de conta selecionado.
-   * @param type O tipo de conta selecionado ('POUPANCA', 'CORRENTE', 'INVESTIMENTO').
-   */
   setConditionalValidators(type: string): void {
-    // Lista de todos os campos específicos para limpar validadores
     const specificFields = [
       'taxa_rendimento', 'ultimo_rendimento', 'limite', 'data_vencimento',
       'taxa_manutencao', 'perfil_risco', 'valor_minimo', 'taxa_rendimento_base'
     ];
 
-    // Limpa validadores, atualiza status de validade e reseta estado visual para todos os campos específicos
     specificFields.forEach(field => {
       const control = this.accountForm.get(field);
       control?.clearValidators();
       control?.updateValueAndValidity();
-      control?.markAsPristine(); // Limpa estado 'dirty'
-      control?.markAsUntouched(); // Limpa estado 'touched'
+      control?.markAsPristine();
+      control?.markAsUntouched();
     });
 
-    // Define novos validadores com base no tipo de conta
     if (type === 'POUPANCA') {
       this.accountForm.get('taxa_rendimento')?.setValidators([Validators.required, Validators.min(0)]);
     } else if (type === 'CORRENTE') {
@@ -99,21 +89,14 @@ export class CreateAccountComponent implements OnInit {
       this.accountForm.get('valor_minimo')?.setValidators([Validators.required, Validators.min(0)]);
       this.accountForm.get('taxa_rendimento_base')?.setValidators([Validators.required, Validators.min(0)]);
     }
-    // Revalida o formulário completo após a mudança dos validadores
-    this.accountForm.updateValueAndValidity(); 
+    this.accountForm.updateValueAndValidity();
   }
 
-  /**
-   * Carrega a lista de clientes e agências do backend para popular os dropdowns.
-   */
   loadDependencies(): void {
-    // Carrega usuários (filtrando apenas clientes)
     this.usuarioService.getAllUsuarios().subscribe({
       next: (data) => {
-        // Filtra os usuários retornados da API para incluir apenas aqueles com tipo_usuario === 'CLIENTE'
-        // A propriedade no JSON do backend é 'tipoUsuario' (camelCase)
-        this.usuariosClientes = data.filter(u => u.tipoUsuario === 'CLIENTE'); 
-        console.log('Clientes carregados:', this.usuariosClientes);
+        this.usuariosClientes = data.filter(u => u.tipoUsuario === 'CLIENTE');
+        console.log('DEBUG: Clientes carregados (filtrados):', this.usuariosClientes);
       },
       error: (error) => {
         console.error('Erro ao carregar clientes:', error);
@@ -121,11 +104,10 @@ export class CreateAccountComponent implements OnInit {
       }
     });
 
-    // Carrega agências
     this.agenciaService.getAllAgencias().subscribe({
       next: (data) => {
         this.agencias = data;
-        console.log('Agências carregadas:', this.agencias);
+        console.log('DEBUG: Agências carregadas (direto do backend):', this.agencias);
       },
       error: (error) => {
         console.error('Erro ao carregar agências:', error);
@@ -134,25 +116,71 @@ export class CreateAccountComponent implements OnInit {
     });
   }
 
-  /**
-   * Manipula a submissão do formulário de criação de conta.
-   */
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
     
-    if (this.accountForm.valid) {
-      const formData = this.accountForm.value;
-      console.log('Dados da nova conta para envio:', formData);
+    console.log('DEBUG: Tentativa de submissão do formulário.');
+    console.log('DEBUG: Status completo do formulário:', this.accountForm.status);
+    console.log('DEBUG: Valor completo do formulário:', this.accountForm.value);
+    
+    if (this.accountForm.invalid) {
+      console.log('DEBUG: Formulário é inválido. Erros por controle:');
+      Object.keys(this.accountForm.controls).forEach(key => {
+        const control = this.accountForm.get(key);
+        console.log(`  Controle: ${key}, Valor: ${control?.value}, Válido: ${control?.valid}, Erros:`, control?.errors);
+      });
+    }
 
-      // Chama o serviço de contas para criar a conta no backend
-      this.contaService.createConta(formData).subscribe({
+    if (this.accountForm.valid) {
+      const rawFormData = this.accountForm.value;
+      
+      // Encontrar o CPF do cliente selecionado
+      const selectedClient = this.usuariosClientes.find(client => client.id_usuario === rawFormData.id_cliente);
+      if (!selectedClient || !selectedClient.cpf) {
+        this.errorMessage = 'CPF do cliente não encontrado. Selecione um cliente válido.';
+        return;
+      }
+
+      // Construir o JSON conforme o backend espera
+      let dadosEspecificos: any = {};
+      const tipoConta = rawFormData.tipo_conta;
+
+      if (tipoConta === 'POUPANCA') {
+        dadosEspecificos = {
+          taxaRendimento: rawFormData.taxa_rendimento
+          // ultimoRendimento (backend pode gerar ou não ser necessário no POST)
+        };
+      } else if (tipoConta === 'CORRENTE') {
+        dadosEspecificos = {
+          limite: rawFormData.limite,
+          dataVencimento: rawFormData.data_vencimento, // Backend espera "YYYY-MM-DD" para DATE
+          taxaManutencao: rawFormData.taxa_manutencao
+        };
+      } else if (tipoConta === 'INVESTIMENTO') {
+        dadosEspecificos = {
+          perfilRisco: rawFormData.perfil_risco,
+          valorMinimo: rawFormData.valor_minimo,
+          taxaRendimentoBase: rawFormData.taxa_rendimento_base
+        };
+      }
+
+      const payload = {
+        cpfCliente: selectedClient.cpf, // Usando o CPF do cliente
+        idAgencia: rawFormData.id_agencia,
+        tipoConta: tipoConta, // CamelCase
+        saldoInicial: rawFormData.saldo, // Adicionado saldo inicial aqui
+        dadosEspecificos: dadosEspecificos
+      };
+
+      console.log('DEBUG: Payload FINAL para o backend:', payload);
+
+      this.contaService.createConta(payload).subscribe({
         next: (response) => {
           this.successMessage = response.message || 'Conta criada com sucesso!';
           console.log('Conta criada:', response);
-          // Limpa o formulário e redefine os valores padrão após o sucesso
-          this.accountForm.reset({ tipo_conta: 'POUPANCA', saldo: 0 }); 
-          this.setConditionalValidators('POUPANCA'); // Re-define validações para o tipo padrão
+          this.accountForm.reset({ tipo_conta: 'POUPANCA', saldo: 0 });
+          this.setConditionalValidators('POUPANCA');
         },
         error: (error) => {
           console.error('Erro ao criar conta:', error);
@@ -161,8 +189,7 @@ export class CreateAccountComponent implements OnInit {
       });
     } else {
       this.errorMessage = 'Por favor, preencha todos os campos obrigatórios corretamente.';
-      // Marca todos os campos como "touched" para exibir mensagens de erro ao usuário
-      this.accountForm.markAllAsTouched(); 
+      this.accountForm.markAllAsTouched();
     }
   }
 }
