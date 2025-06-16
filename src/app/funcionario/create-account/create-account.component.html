@@ -1,0 +1,121 @@
+<div class="create-account-container">
+  <h3>Abertura de Nova Conta</h3>
+
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="id_cliente">Cliente:</label>
+      <select id="id_cliente" formControlName="id_cliente">
+        <option [ngValue]="null" disabled>Selecione um cliente</option>
+        <option *ngFor="let user of usuarios" [ngValue]="user.id_cliente">{{ user.nome }} (CPF: {{ user.CPF }})</option>
+      </select>
+      <div *ngIf="accountForm.get('id_cliente')?.invalid && accountForm.get('id_cliente')?.touched" class="error-message">
+        Cliente é obrigatório.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="id_agencia">Agência:</label>
+      <select id="id_agencia" formControlName="id_agencia">
+        <option [ngValue]="null" disabled>Selecione uma agência</option>
+        <option *ngFor="let agencia of agencias" [ngValue]="agencia.id_agencia">{{ agencia.nome }} (Cód: {{ agencia.codigo_agencia }})</option>
+      </select>
+      <div *ngIf="accountForm.get('id_agencia')?.invalid && accountForm.get('id_agencia')?.touched" class="error-message">
+        Agência é obrigatória.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipo_conta">Tipo de Conta:</label>
+      <select id="tipo_conta" formControlName="tipo_conta">
+        <option *ngFor="let tipo of tiposConta" [ngValue]="tipo">{{ tipo }}</option>
+      </select>
+      <div *ngIf="accountForm.get('tipo_conta')?.invalid && accountForm.get('tipo_conta')?.touched" class="error-message">
+        Tipo de conta é obrigatório.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="saldo">Saldo Inicial:</label>
+      <input type="number" id="saldo" formControlName="saldo" min="0">
+      <div *ngIf="accountForm.get('saldo')?.invalid && accountForm.get('saldo')?.touched" class="error-message">
+        <div *ngIf="accountForm.get('saldo')?.errors?.['required']">Saldo é obrigatório.</div>
+        <div *ngIf="accountForm.get('saldo')?.errors?.['min']">Saldo inicial deve ser no mínimo 0.</div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'POUPANCA'">
+      <div class="form-group">
+        <label for="taxa_rendimento">Taxa de Rendimento (%):</label>
+        <input type="number" id="taxa_rendimento" formControlName="taxa_rendimento" min="0" step="0.01">
+        <div *ngIf="accountForm.get('taxa_rendimento')?.invalid && accountForm.get('taxa_rendimento')?.touched" class="error-message">
+          <div *ngIf="accountForm.get('taxa_rendimento')?.errors?.['required']">Taxa de rendimento é obrigatória.</div>
+          <div *ngIf="accountForm.get('taxa_rendimento')?.errors?.['min']">Taxa deve ser no mínimo 0.</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'CORRENTE'">
+      <div class="form-group">
+        <label for="limite">Limite de Crédito:</label>
+        <input type="number" id="limite" formControlName="limite" min="0">
+        <div *ngIf="accountForm.get('limite')?.invalid && accountForm.get('limite')?.touched" class="error-message">
+          <div *ngIf="accountForm.get('limite')?.errors?.['required']">Limite de crédito é obrigatório.</div>
+          <div *ngIf="accountForm.get('limite')?.errors?.['min']">Limite deve ser no mínimo 0.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="data_vencimento">Data de Vencimento do Limite:</label>
+        <input type="date" id="data_vencimento" formControlName="data_vencimento">
+        <div *ngIf="accountForm.get('data_vencimento')?.invalid && accountForm.get('data_vencimento')?.touched" class="error-message">
+          Data de vencimento é obrigatória.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="taxa_manutencao">Taxa de Manutenção (%):</label>
+        <input type="number" id="taxa_manutencao" formControlName="taxa_manutencao" min="0" step="0.01">
+        <div *ngIf="accountForm.get('taxa_manutencao')?.invalid && accountForm.get('taxa_manutencao')?.touched" class="error-message">
+          <div *ngIf="accountForm.get('taxa_manutencao')?.errors?.['required']">Taxa de manutenção é obrigatória.</div>
+          <div *ngIf="accountForm.get('taxa_manutencao')?.errors?.['min']">Taxa deve ser no mínimo 0.</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="accountForm.get('tipo_conta')?.value === 'INVESTIMENTO'">
+      <div class="form-group">
+        <label for="perfil_risco">Perfil de Risco:</label>
+        <select id="perfil_risco" formControlName="perfil_risco">
+          <option [ngValue]="null" disabled>Selecione o perfil</option>
+          <option *ngFor="let perfil of perfisRisco" [ngValue]="perfil">{{ perfil }}</option>
+        </select>
+        <div *ngIf="accountForm.get('perfil_risco')?.invalid && accountForm.get('perfil_risco')?.touched" class="error-message">
+          Perfil de risco é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="valor_minimo">Valor Mínimo de Investimento:</label>
+        <input type="number" id="valor_minimo" formControlName="valor_minimo" min="0">
+        <div *ngIf="accountForm.get('valor_minimo')?.invalid && accountForm.get('valor_minimo')?.touched" class="error-message">
+          <div *ngIf="accountForm.get('valor_minimo')?.errors?.['required']">Valor mínimo é obrigatório.</div>
+          <div *ngIf="accountForm.get('valor_minimo')?.errors?.['min']">Valor mínimo deve ser no mínimo 0.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="taxa_rendimento_base">Taxa de Rendimento Base (%):</label>
+        <input type="number" id="taxa_rendimento_base" formControlName="taxa_rendimento_base" min="0" step="0.01">
+        <div *ngIf="accountForm.get('taxa_rendimento_base')?.invalid && accountForm.get('taxa_rendimento_base')?.touched" class="error-message">
+          <div *ngIf="accountForm.get('taxa_rendimento_base')?.errors?.['required']">Taxa de rendimento base é obrigatória.</div>
+          <div *ngIf="accountForm.get('taxa_rendimento_base')?.errors?.['min']">Taxa deve ser no mínimo 0.</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <button type="submit" [disabled]="!accountForm.valid">Criar Conta</button>
+
+    <div *ngIf="errorMessage" class="alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+</div>

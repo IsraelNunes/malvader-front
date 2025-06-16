@@ -1,0 +1,52 @@
+<div class="list-entities-container">
+  <h3>{{ type === 'usuarios' ? 'Lista de Usuários' : 'Lista de Contas' }}</h3>
+
+  <div *ngIf="errorMessage" class="alert-error">{{ errorMessage }}</div>
+
+  <table class="data-table">
+    <thead>
+      <ng-container *ngIf="type === 'usuarios'">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Tipo</th>
+          <th>Telefone</th>
+          </tr>
+      </ng-container>
+      <ng-container *ngIf="type === 'contas'">
+        <tr>
+          <th>ID</th>
+          <th>Número da Conta</th>
+          <th>Saldo</th>
+          <th>Tipo</th>
+          <th>Cliente (ID)</th>
+          <th>Status</th>
+          </tr>
+      </ng-container>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="type === 'usuarios'">
+        <tr *ngFor="let entity of entities">
+          <td>{{ entity.idUsuario }}</td>
+          <td>{{ entity.nome }}</td>
+          <td>{{ entity.CPF }}</td>
+          <td>{{ entity.tipo_usuario }}</td>
+          <td>{{ entity.telefone }}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="type === 'contas'">
+        <tr *ngFor="let entity of entities">
+          <td>{{ entity.id_conta }}</td>
+          <td>{{ entity.numero_conta }}</td>
+          <td>R$ {{ entity.saldo | number:'1.2-2' }}</td>
+          <td>{{ entity.tipo_conta }}</td>
+          <td>{{ entity.Usuario_idUsuario }}</td> <td>{{ entity.status }}</td>
+        </tr>
+      </ng-container>
+      <tr *ngIf="entities.length === 0">
+        <td [attr.colspan]="type === 'usuarios' ? 5 : 6">Nenhum {{ type === 'usuarios' ? 'usuário' : 'conta' }} encontrado.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

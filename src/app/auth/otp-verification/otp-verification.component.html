@@ -1,0 +1,30 @@
+<div class="otp-verification-container">
+  <h2>Verificação de Segurança</h2>
+  <h3>Insira o Código OTP</h3>
+
+  <p class="instruction-text">Um código OTP foi enviado para o email <span class="highlight">{{ email }}</span>.</p>
+  <p class="instruction-text">Por favor, verifique sua caixa de entrada e insira o código abaixo.</p>
+
+  <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
+    <div class="form-group otp-input-group">
+      <label for="otp">Código OTP:</label>
+      <input type="text" id="otp" formControlName="otp" placeholder="Seis dígitos" maxlength="6">
+      <button type="button" class="request-new-otp-btn" (click)="requestOtp()">Reenviar OTP</button>
+      <div *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched" class="error-message">
+        <div *ngIf="otpForm.get('otp')?.errors?.['required']">Código OTP é obrigatório.</div>
+        <div *ngIf="otpForm.get('otp')?.errors?.['pattern']">Código OTP deve ter 6 dígitos numéricos.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!otpForm.valid">Verificar e Entrar</button>
+
+    <div *ngIf="errorMessage" class="alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+
+  <p class="small-text">Não recebeu o código? Verifique seu SPAM ou clique em "Reenviar OTP".</p>
+</div>

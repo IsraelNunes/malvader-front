@@ -1,0 +1,16 @@
+<div class="dashboard-container">
+  <h2>Painel do Cliente</h2>
+  <p>Bem-vindo(a), <span class="highlight">{{ nomeUsuario }}</span>!</p>
+  <p>Seu CPF: <span class="highlight">{{ cpfUsuario }}</span></p>
+
+  <nav class="dashboard-nav">
+    <button class="nav-button">Saldo e Rendimentos</button>
+    <button class="nav-button">Depósito</button>
+    <button class="nav-button">Saque</button>
+    <button class="nav-button">Transferência</button>
+    <button class="nav-button">Extrato</button>
+    <button class="nav-button">Consultar Limite</button>
+  </nav>
+
+  <button class="logout-btn" (click)="logout()">Sair</button>
+</div>
