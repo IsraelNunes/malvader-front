@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
-import { OtpVerificationComponent } from './auth/otp-verification/otp-verification.component'; // <-- Importe
 import { funcionarioGuard } from './guards/funcionario.guard';
 import { clienteGuard } from './guards/cliente.guard';
 
@@ -12,7 +11,6 @@ import { DashboardComponent as ClienteDashboardComponent } from './cliente/dashb
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'verificar-otp', component: OtpVerificationComponent }, // <-- Nova rota para verificação de OTP
   {
     path: 'funcionario/dashboard',
     component: FuncionarioDashboardComponent,

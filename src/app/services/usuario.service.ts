@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service'; // Para obter o token
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +24,18 @@ export class UsuarioService {
   }
 
   // Rota GET /api/usuarios/listar
+  // Necessita de token de funcionário (GERENTE, ATENDENTE, ESTAGIARIO)
   getAllUsuarios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
   }
 
-  // Rota GET /api/usuarios/:id (se existir)
+  // Rota GET /api/usuarios/:id (para buscar detalhes de um usuário específico, se necessário)
   getUsuarioById(id: number): Observable<any> {
-    return this.http.get<any>(`<span class="math-inline">\{this\.apiUrl\}/</span>{id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  // Rotas adicionais para operações de usuário (se houver no backend e necessário no front)
-  // Ex: atualizar perfil, etc.
+  // Rota POST /api/usuarios/criar (se o frontend for criar usuários base diretamente)
+  createUsuario(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/criar`, userData, { headers: this.getAuthHeaders() });
+  }
 }

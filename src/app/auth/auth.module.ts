@@ -6,13 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms'; // <-- Certifique-se que e
 import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { OtpVerificationComponent } from './otp-verification/otp-verification.component'; // <-- Certifique-se que está importado
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    OtpVerificationComponent // <-- E aqui, está declarado
   ],
   imports: [
     CommonModule,

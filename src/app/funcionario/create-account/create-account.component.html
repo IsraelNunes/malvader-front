@@ -6,7 +6,7 @@
       <label for="id_cliente">Cliente:</label>
       <select id="id_cliente" formControlName="id_cliente">
         <option [ngValue]="null" disabled>Selecione um cliente</option>
-        <option *ngFor="let user of usuarios" [ngValue]="user.id_cliente">{{ user.nome }} (CPF: {{ user.CPF }})</option>
+        <option *ngFor="let user of usuariosClientes" [ngValue]="user.idUsuario">{{ user.nome }} (CPF: {{ user.cpf }})</option>
       </select>
       <div *ngIf="accountForm.get('id_cliente')?.invalid && accountForm.get('id_cliente')?.touched" class="error-message">
         Cliente é obrigatório.

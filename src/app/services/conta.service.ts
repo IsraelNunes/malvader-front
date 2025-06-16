@@ -25,44 +25,37 @@ export class ContaService {
 
   // Rotas administrativas (para funcionários)
   // POST /api/contas/criar
+  // Necessita de token de funcionário (ATENDENTE, GERENTE)
   createConta(contaData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/criar`, contaData, { headers: this.getAuthHeaders() });
   }
 
   // GET /api/contas/listar
+  // Necessita de token de funcionário (ESTAGIARIO, ATENDENTE, GERENTE)
   getAllContas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
   }
 
   // GET /api/contas/:id
+  // Necessita de token de funcionário (ESTAGIARIO, ATENDENTE, GERENTE)
   getContaById(id: number): Observable<any> {
-    return this.http.get<any>(`<span class="math-inline">\{this\.apiUrl\}/</span>{id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  // Rotas de operações financeiras (para clientes/funcionários)
-  // POST /api/contas/deposito
+  // Rotas de operações financeiras (para clientes/funcionários) - futuras implementações
   realizarDeposito(data: { numeroConta: string, valor: number, descricao?: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/deposito`, data, { headers: this.getAuthHeaders() });
   }
-
-  // POST /api/contas/saque
   realizarSaque(data: { numeroConta: string, valor: number, senha: string, otp: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/saque`, data, { headers: this.getAuthHeaders() });
   }
-
-  // POST /api/contas/transferencia
   realizarTransferencia(data: { idContaOrigem: number, idContaDestino: number, valor: number, senha: string, otp: string, descricao?: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/transferencia`, data, { headers: this.getAuthHeaders() });
   }
-
-  // GET /api/contas/extrato/:numeroConta
   getExtrato(numeroConta: string): Observable<any[]> {
-    return this.http.get<any[]>(`<span class="math-inline">\{this\.apiUrl\}/extrato/</span>{numeroConta}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any[]>(`${this.apiUrl}/extrato/${numeroConta}`, { headers: this.getAuthHeaders() });
   }
-
-  // Outras operações se existirem (ex: encerrar conta)
-  // PUT /api/contas/:id/encerrar (exemplo de rota)
   encerrarConta(idConta: number, data: { senhaAdmin: string, otp: string, motivo: string }): Observable<any> {
-    return this.http.put<any>(`<span class="math-inline">\{this\.apiUrl\}/</span>{idConta}/encerrar`, data, { headers: this.getAuthHeaders() });
+    return this.http.put<any>(`${this.apiUrl}/${idConta}/encerrar`, data, { headers: this.getAuthHeaders() });
   }
 }
