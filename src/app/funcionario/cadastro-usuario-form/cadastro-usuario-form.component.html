@@ -1,0 +1,113 @@
+<div class="cadastro-usuario-form-container">
+  <h3>{{ tipoCadastro === 'cliente' ? 'Cadastrar Novo Cliente' : 'Cadastrar Novo Funcionário' }}</h3>
+
+  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h4>Dados Pessoais</h4>
+      <div class="form-group">
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" formControlName="nome">
+        <div *ngIf="usuarioForm.get('nome')?.invalid && usuarioForm.get('nome')?.touched" class="error-message">
+          Nome é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" formControlName="cpf" placeholder="Apenas números">
+        <div *ngIf="usuarioForm.get('cpf')?.invalid && usuarioForm.get('cpf')?.touched" class="error-message">
+          <div *ngIf="usuarioForm.get('cpf')?.errors?.['required']">CPF é obrigatório.</div>
+          <div *ngIf="usuarioForm.get('cpf')?.errors?.['pattern']">CPF deve ter 11 dígitos.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched" class="error-message">
+          <div *ngIf="usuarioForm.get('email')?.errors?.['required']">Email é obrigatório.</div>
+          <div *ngIf="usuarioForm.get('email')?.errors?.['email']">Email inválido.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="data_nascimento">Data de Nascimento:</label>
+        <input type="date" id="data_nascimento" formControlName="data_nascimento">
+        <div *ngIf="usuarioForm.get('data_nascimento')?.invalid && usuarioForm.get('data_nascimento')?.touched" class="error-message">
+          Data de nascimento é obrigatória.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" formControlName="telefone" placeholder="Apenas números">
+        <div *ngIf="usuarioForm.get('telefone')?.invalid && usuarioForm.get('telefone')?.touched" class="error-message">
+          <div *ngIf="usuarioForm.get('telefone')?.errors?.['required']">Telefone é obrigatório.</div>
+          <div *ngIf="usuarioForm.get('telefone')?.errors?.['pattern']">Telefone inválido (10-11 dígitos).</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" formControlName="senha">
+        <div *ngIf="usuarioForm.get('senha')?.invalid && usuarioForm.get('senha')?.touched" class="error-message">
+          <div *ngIf="usuarioForm.get('senha')?.errors?.['required']">Senha é obrigatória.</div>
+          <div *ngIf="usuarioForm.get('senha')?.errors?.['minlength']">Senha deve ter no mínimo 8 caracteres.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações do Funcionário - Visíveis apenas se tipoCadastro for 'funcionario' -->
+    <div class="form-section" *ngIf="tipoCadastro === 'funcionario'">
+      <h4>Informações do Funcionário</h4>
+      <div class="form-group">
+        <label for="cargo">Cargo:</label>
+        <select id="cargo" formControlName="cargo">
+          <option *ngFor="let c of cargosFuncionario" [value]="c">{{ c }}</option>
+        </select>
+        <div *ngIf="usuarioForm.get('cargo')?.invalid && usuarioForm.get('cargo')?.touched" class="error-message">
+          Cargo é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de Endereço - Opcional -->
+    <div class="form-section">
+      <h4>Endereço (Opcional nesta etapa)</h4>
+      <div class="form-group">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" formControlName="cep" placeholder="Apenas números">
+      </div>
+      <div class="form-group">
+        <label for="local">Logradouro:</label>
+        <input type="text" id="local" formControlName="local">
+      </div>
+      <div class="form-group">
+        <label for="numero_casa">Número:</label>
+        <input type="number" id="numero_casa" formControlName="numero_casa">
+      </div>
+      <div class="form-group">
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro" formControlName="bairro">
+      </div>
+      <div class="form-group">
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" formControlName="cidade">
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado (UF):</label>
+        <input type="text" id="estado" formControlName="estado" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label for="complemento">Complemento (Opcional):</label>
+        <input type="text" id="complemento" formControlName="complemento">
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!usuarioForm.valid">
+      {{ tipoCadastro === 'cliente' ? 'Cadastrar Cliente' : 'Cadastrar Funcionário' }}
+    </button>
+
+    <div *ngIf="errorMessage" class="alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+</div>

@@ -1,4 +1,4 @@
-// Cores base do tema
+// Cores base do tema (já definidas em styles.scss, mas para referência)
 $primary-dark: #1a1a1a;
 $secondary-dark: #2c2c2c;
 $text-light: #e0e0e0;
@@ -13,8 +13,8 @@ $success-color: #28a745;
 $error-color: #dc3545;
 
 .login-container {
-  max-width: 450px;
-  margin: 80px auto;
+  max-width: 480px; // Aumentei um pouco para acomodar mais campos
+  margin: 50px auto;
   padding: 30px;
   border: 1px solid $secondary-dark;
   border-radius: 10px;
@@ -38,10 +38,39 @@ $error-color: #dc3545;
     padding-bottom: 10px;
   }
 
+  .mode-toggle {
+    display: flex;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden; // Para o efeito de borda arredondada nos botões
+    border: 1px solid $primary-dark; // Borda sutil para o toggle group
+
+    button {
+      flex: 1; // Divide o espaço igualmente
+      background-color: $primary-dark;
+      color: $text-light;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &.active {
+        background-color: $accent-orange;
+        color: $primary-dark;
+        font-weight: bold;
+      }
+
+      &:hover:not(.active) {
+        background-color: lighten($primary-dark, 5%);
+      }
+    }
+  }
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px; // Espaçamento entre os form-groups
   }
 
   .form-group {
@@ -60,6 +89,8 @@ $error-color: #dc3545;
   input[type="text"],
   input[type="password"],
   input[type="email"],
+  input[type="number"],
+  input[type="date"],
   select {
     width: 100%;
     padding: 12px;
@@ -80,7 +111,7 @@ $error-color: #dc3545;
 
   select {
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff7a00%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.1%2C4.1-9.1%2C6.1-14.2%2C6.1c-5.1%2C0-10.1-2-14.2-6.1L5.4%2C114.7c-4.1-4.1-6.1-9.1-6.1-14.2%2C0-5.1%2C2-10.1%2C6.1-14.2l12.7-12.7c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1L145.2%2C174c4.1%2C4.1%2C9.1%2C6.1%2C14.2%2C6.1c5.1%2C0%2C10.1-2%2C14.2-6.1l117.8-117.8c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1l12.7%2C12.7c4.1%2C4.1%2C6.1%2C9.1%2C6.1%2C14.2C293.1%2C105.6%2C291.1%2C110.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff7a00%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.1%2C4.1-9.1%2C6.1-14.2%2C6.1c-5.1%2C0-10.1-2-14.2-6.1L5.4%2C114.7c-4.1-4.1-6.1-9.1-6.1-14.2%2C0-5.1%2C2-10.1%2C6.1-14.2l12.7-12.7c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1L145.2%2C174c4.1%2C4.1%2C9.1%2C6.1%2C14.2%2C6.1c5.1%2C0%2C10.1-2%2C14.2-6.1l117.8-117.8c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1l12.7%2C12.7c4.1-4.1%2C6.1%2C9.1%2C6.1%2C14.2C293.1%2C105.6%2C291.1%2C110.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
@@ -92,36 +123,32 @@ $error-color: #dc3545;
     margin-top: 5px;
   }
 
-  // NOVO ESTILO PARA A SEÇÃO OTP
   .otp-section {
-    // Display flex para alinhar input e botão na mesma linha
-    display: flex; 
-    flex-direction: column; // Conteúdo dentro da seção OTP: label e input/button
-    // gap: 10px; // Espaçamento entre os elementos (label e o grupo input+button)
-    position: relative; // Para posicionar o grupo OTP-input-button
+    display: flex;
+    flex-direction: column;
+    position: relative;
 
     label {
-      margin-bottom: 8px; // Garante espaçamento entre label e input/button
+      margin-bottom: 8px;
     }
   }
 
-  // NOVO GRUPO PARA INPUT E BOTÃO OTP
   .otp-input-button-group {
-    display: flex; // Alinha o input e o botão horizontalmente
-    gap: 10px; // Espaçamento entre o input OTP e o botão "Gerar OTP"
-    align-items: center; // Centraliza verticalmente o input e o botão
-    width: 100%; // Ocupa a largura total dentro do form-group
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
   }
 
-  .otp-input-button-group input { // Estilo para o input do OTP
-    flex-grow: 1; // Permite que o input cresça para ocupar espaço disponível
-    width: auto; // Reseta a largura para que flex-grow funcione
+  .otp-input-button-group input {
+    flex-grow: 1;
+    width: auto;
   }
 
   .request-otp-btn {
-    flex-shrink: 0; // Impede o botão de encolher
+    flex-shrink: 0;
     padding: 12px 15px;
-    background-color: $accent-orange; // Laranja
+    background-color: $accent-orange;
     color: $primary-dark;
     border: none;
     border-radius: 6px;
@@ -133,55 +160,55 @@ $error-color: #dc3545;
       background-color: $accent-orange-dark;
     }
   }
-}
 
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  background-color: $accent-orange;
-  color: $primary-dark;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: $accent-orange;
+    color: $primary-dark;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
 
-  &:hover:not(:disabled) {
-    background-color: $accent-orange-dark;
+    &:hover:not(:disabled) {
+      background-color: $accent-orange-dark;
+    }
+
+    &:disabled {
+      background-color: rgba($accent-orange, 0.4);
+      cursor: not-allowed;
+    }
   }
 
-  &:disabled {
-    background-color: rgba($accent-orange, 0.4);
-    cursor: not-allowed;
+  .alert-error {
+    color: $error-color;
+    background-color: rgba($error-color, 0.15);
+    border: 1px solid rgba($error-color, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    text-align: left;
+    font-size: 0.9em;
   }
-}
 
-.alert-error {
-  color: $error-color;
-  background-color: rgba($error-color, 0.15);
-  border: 1px solid rgba($error-color, 0.3);
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 20px;
-  text-align: left;
-  font-size: 0.9em;
-}
+  .alert-success {
+    color: $success-color;
+    background-color: rgba($success-color, 0.15);
+    border: 1px solid rgba($success-color, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    text-align: left;
+    font-size: 0.9em;
+  }
 
-.alert-success {
-  color: $success-color;
-  background-color: rgba($success-color, 0.15);
-  border: 1px solid rgba($success-color, 0.3);
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 20px;
-  text-align: left;
-  font-size: 0.9em;
-}
-
-.small-text {
-  margin-top: 25px;
-  font-size: 0.85em;
-  color: $text-muted;
+  .small-text {
+    margin-top: 25px;
+    font-size: 0.85em;
+    color: $text-muted;
+  }
 }

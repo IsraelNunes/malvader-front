@@ -8,7 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms'; // Necessário para formul
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateAccountComponent } from './create-account/create-account.component'; // <-- Importar
 import { ListEntitiesComponent } from './list-entities/list-entities.component';   // <-- Importar
-import { CreateFuncionarioComponent } from './create-funcionario/create-funcionario.component'; // <-- Importar
+import { CreateFuncionarioComponent } from './create-funcionario/create-funcionario.component';
+import { CadastroUsuarioFormComponent } from './cadastro-usuario-form/cadastro-usuario-form.component'; // <-- Importar
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { CreateFuncionarioComponent } from './create-funcionario/create-funciona
     DashboardComponent,
     CreateAccountComponent, // <-- Declarar
     ListEntitiesComponent,  // <-- Declarar
-    CreateFuncionarioComponent // <-- Declarar
+    CreateFuncionarioComponent, CadastroUsuarioFormComponent // <-- Declarar
   ],
   imports: [
     CommonModule,
