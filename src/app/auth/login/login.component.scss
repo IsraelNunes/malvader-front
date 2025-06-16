@@ -39,15 +39,14 @@ $error-color: #dc3545;
   }
 
   form {
-    display: flex; // Usa flexbox para os form-groups
-    flex-direction: column; // Empilha os form-groups verticalmente
-    gap: 20px; // Espaçamento entre os form-groups
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .form-group {
-    // Removi margin-bottom aqui, pois o gap do flexbox cuida do espaçamento
     text-align: left;
-    width: 100%; // Garante que o form-group ocupe toda a largura disponível
+    width: 100%;
   }
 
   label {
@@ -60,9 +59,9 @@ $error-color: #dc3545;
 
   input[type="text"],
   input[type="password"],
-  input[type="email"], /* Adicionado email aqui também */
+  input[type="email"],
   select {
-    width: 100%; // Garante que inputs e selects ocupem 100% da largura do seu pai
+    width: 100%;
     padding: 12px;
     border: 1px solid $primary-dark;
     border-radius: 6px;
@@ -93,7 +92,47 @@ $error-color: #dc3545;
     margin-top: 5px;
   }
 
-  /* Removido o estilo de otp-section que não existe mais */
+  // NOVO ESTILO PARA A SEÇÃO OTP
+  .otp-section {
+    // Display flex para alinhar input e botão na mesma linha
+    display: flex; 
+    flex-direction: column; // Conteúdo dentro da seção OTP: label e input/button
+    // gap: 10px; // Espaçamento entre os elementos (label e o grupo input+button)
+    position: relative; // Para posicionar o grupo OTP-input-button
+
+    label {
+      margin-bottom: 8px; // Garante espaçamento entre label e input/button
+    }
+  }
+
+  // NOVO GRUPO PARA INPUT E BOTÃO OTP
+  .otp-input-button-group {
+    display: flex; // Alinha o input e o botão horizontalmente
+    gap: 10px; // Espaçamento entre o input OTP e o botão "Gerar OTP"
+    align-items: center; // Centraliza verticalmente o input e o botão
+    width: 100%; // Ocupa a largura total dentro do form-group
+  }
+
+  .otp-input-button-group input { // Estilo para o input do OTP
+    flex-grow: 1; // Permite que o input cresça para ocupar espaço disponível
+    width: auto; // Reseta a largura para que flex-grow funcione
+  }
+
+  .request-otp-btn {
+    flex-shrink: 0; // Impede o botão de encolher
+    padding: 12px 15px;
+    background-color: $accent-orange; // Laranja
+    color: $primary-dark;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $accent-orange-dark;
+    }
+  }
 }
 
 button[type="submit"] {
