@@ -1,4 +1,4 @@
-// Cores base do tema (já definidas em styles.scss, mas para referência)
+// Cores base do tema (importadas ou redefinidas para contexto)
 $primary-dark: #1a1a1a;
 $secondary-dark: #2c2c2c;
 $text-light: #e0e0e0;
@@ -13,8 +13,8 @@ $success-color: #28a745;
 $error-color: #dc3545;
 
 .login-container {
-  max-width: 480px; // Aumentei um pouco para acomodar mais campos
-  margin: 50px auto;
+  max-width: 450px; /* Reduz a largura para o formulário de login mais simples */
+  margin: 80px auto; /* Centraliza */
   padding: 30px;
   border: 1px solid $secondary-dark;
   border-radius: 10px;
@@ -38,39 +38,15 @@ $error-color: #dc3545;
     padding-bottom: 10px;
   }
 
-  .mode-toggle {
-    display: flex;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    overflow: hidden; // Para o efeito de borda arredondada nos botões
-    border: 1px solid $primary-dark; // Borda sutil para o toggle group
-
-    button {
-      flex: 1; // Divide o espaço igualmente
-      background-color: $primary-dark;
-      color: $text-light;
-      padding: 10px 15px;
-      border: none;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background-color 0.3s ease, color 0.3s ease;
-
-      &.active {
-        background-color: $accent-orange;
-        color: $primary-dark;
-        font-weight: bold;
-      }
-
-      &:hover:not(.active) {
-        background-color: lighten($primary-dark, 5%);
-      }
-    }
-  }
+  /* REMOVIDO: ESTILO DE .mode-toggle */
+  /*
+  .mode-toggle { ... }
+  */
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 18px; // Espaçamento entre os form-groups
+    gap: 20px; /* Espaçamento entre os form-groups */
   }
 
   .form-group {
@@ -89,8 +65,8 @@ $error-color: #dc3545;
   input[type="text"],
   input[type="password"],
   input[type="email"],
-  input[type="number"],
-  input[type="date"],
+  input[type="number"], /* Adicionado para garantir estilo para inputs numéricos, se usados */
+  input[type="date"], /* Adicionado para garantir estilo para inputs de data, se usados */
   select {
     width: 100%;
     padding: 12px;
