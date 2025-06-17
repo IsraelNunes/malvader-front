@@ -21,31 +21,21 @@ export class CadastroAgenciaFormComponent implements OnInit {
     this.initAgenciaForm();
   }
 
-  /**
-   * Inicializa a estrutura do formulário reativo para cadastro de agência,
-   * contendo EXATAMENTE os campos do JSON fornecido.
-   */
   initAgenciaForm(): void {
     this.agenciaForm = this.fb.group({
-      // Dados da Agência (do JSON)
       nome: ['', Validators.required],
-      codigoAgencia: ['', Validators.required], 
+      codigoAgencia: ['', Validators.required],
 
-      // Dados do Endereço (do JSON)
       cep: ['', Validators.required],
-      local: ['', Validators.required], // Reintegrado
-      numeroCasa: [null, [Validators.required, Validators.min(1)]], 
-      bairro: ['', Validators.required], // Reintegrado
-      cidade: ['', Validators.required], // Reintegrado
-      estado: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}$/)]], // Reintegrado
-      complemento: [''] // Reintegrado (Opcional no JSON)
+      local: ['', Validators.required],
+      numeroCasa: [null, [Validators.required, Validators.min(1)]],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}$/)]],
+      complemento: ['']
     });
   }
 
-  /**
-   * Manipula a submissão do formulário de criação de agência.
-   * O payload é construído EXATAMENTE conforme o JSON fornecido.
-   */
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
@@ -54,13 +44,11 @@ export class CadastroAgenciaFormComponent implements OnInit {
       const rawFormData = this.agenciaForm.value;
       console.log('DEBUG: Raw agency form data (strict JSON):', rawFormData);
 
-      // Constrói o payload para o objeto 'agencia' (1:1 com o JSON)
       const payloadAgencia = {
         nome: rawFormData.nome,
         codigoAgencia: rawFormData.codigoAgencia
       };
 
-      // Constrói o payload para o objeto 'endereco' (1:1 com o JSON)
       const payloadEndereco = {
         cep: rawFormData.cep,
         local: rawFormData.local,
@@ -68,10 +56,9 @@ export class CadastroAgenciaFormComponent implements OnInit {
         bairro: rawFormData.bairro,
         cidade: rawFormData.cidade,
         estado: rawFormData.estado,
-        complemento: rawFormData.complemento || null // Garante null se vazio
+        complemento: rawFormData.complemento || null
       };
 
-      // Constrói o payload FINAL no formato { "agencia": {...}, "endereco": {...} }
       const finalPayload = {
         agencia: payloadAgencia,
         endereco: payloadEndereco
@@ -88,8 +75,6 @@ export class CadastroAgenciaFormComponent implements OnInit {
         error: (error) => {
           console.error('Error registering agency:', error);
           this.errorMessage = error.error?.message || 'Falha ao cadastrar agência.';
-          // A mensagem abaixo é um lembrete do problema de incompatibilidade com o backend
-          // this.errorMessage += " (Verifique logs do backend: campos de endereço podem ser obrigatórios.)";
         }
       });
     } else {

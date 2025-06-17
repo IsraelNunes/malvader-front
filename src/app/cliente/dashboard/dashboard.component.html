@@ -2,15 +2,81 @@
   <h2>Painel do Cliente</h2>
   <p>Bem-vindo(a), <span class="highlight">{{ nomeUsuario }}</span>!</p>
   <p>Seu CPF: <span class="highlight">{{ cpfUsuario }}</span></p>
+  <p>Seu ID de usuário: {{ idUsuario }}</p>
 
   <nav class="dashboard-nav">
-    <button class="nav-button">Saldo e Rendimentos</button>
-    <button class="nav-button">Depósito</button>
-    <button class="nav-button">Saque</button>
-    <button class="nav-button">Transferência</button>
-    <button class="nav-button">Extrato</button>
-    <button class="nav-button">Consultar Limite</button>
+    <button class="nav-button" (click)="activeSection = 'saldo'">Saldo e Rendimentos</button>
+    <button class="nav-button" (click)="activeSection = 'deposito'">Depósito</button>
+    <button class="nav-button" (click)="activeSection = 'saque'">Saque</button>
+    <button class="nav-button" (click)="activeSection = 'transferencia'">Transferência</button>
+    <button class="nav-button" (click)="activeSection = 'extrato'">Extrato</button>
+    <button class="nav-button" (click)="activeSection = 'consultarLimite'">Consultar Limite</button>
   </nav>
+
+  <div class="main-content-section">
+    <div *ngIf="activeSection === 'saldo'">
+      <h3>Seu Saldo e Rendimentos</h3>
+      <div *ngIf="clientAccount">
+        <p>Número da Conta: <span class="highlight">{{ clientAccount.numero_conta || clientAccount.numeroConta }}</span></p>
+        <p>Saldo Atual: <span class="highlight">R$ {{ clientAccount.saldo | number:'1.2-2' }}</span></p>
+        <p>Tipo de Conta: <span class="highlight">{{ clientAccount.tipo_conta || clientAccount.tipoConta }}</span></p>
+        <p *ngIf="clientAccount.taxa_rendimento">Taxa de Rendimento: {{ clientAccount.taxa_rendimento }}%</p>
+        <p *ngIf="clientAccount.perfil_risco">Perfil de Risco: {{ clientAccount.perfil_risco }}</p>
+      </div>
+      <div *ngIf="!clientAccount">
+        <p>{{ errorMessage || 'Nenhuma conta associada encontrada.' }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="activeSection === 'deposito'">
+      <h3>Depositar Dinheiro</h3>
+      <p>Formulário de depósito será exibido aqui.</p>
+    </div>
+
+    <div *ngIf="activeSection === 'saque'">
+      <h3>Sacar Dinheiro</h3>
+      <p>Formulário de saque será exibido aqui.</p>
+    </div>
+
+    <div *ngIf="activeSection === 'transferencia'">
+      <h3>Realizar Transferência</h3>
+      <p>Formulário de transferência será exibido aqui.</p>
+    </div>
+
+    <div *ngIf="activeSection === 'extrato'">
+      <h3>Extrato de Transações</h3>
+      <div *ngIf="extrato && extrato.length > 0">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID Transação</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Data/Hora</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transacao of extrato">
+              <td>{{ transacao.id_transacao || transacao.idTransacao }}</td>
+              <td>{{ transacao.tipo_transacao || transacao.tipoTransacao }}</td>
+              <td>R$ {{ transacao.valor | number:'1.2-2' }}</td>
+              <td>{{ transacao.data_hora | date:'short' }}</td>
+              <td>{{ transacao.descricao }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!extrato || extrato.length === 0">
+        <p>Nenhuma movimentação encontrada para esta conta.</p>
+      </div>
+    </div>
+
+    <div *ngIf="activeSection === 'consultarLimite'">
+      <h3>Consultar Limite</h3>
+      <p>Seu limite atual e projeção de aumento serão exibidos aqui.</p>
+    </div>
+  </div>
 
   <button class="logout-btn" (click)="logout()">Sair</button>
 </div>

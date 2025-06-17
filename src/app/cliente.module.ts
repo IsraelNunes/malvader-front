@@ -1,4 +1,3 @@
-// front/malvader-frontend/src/app/services/cliente.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +7,7 @@ import { AuthService } from './auth/auth.service';
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://localhost:3000/api/clientes'; // Rota base para clientes
+  private apiUrl = 'http://localhost:3000/api/clientes'; 
 
   constructor(
     private http: HttpClient,
@@ -23,13 +22,11 @@ export class ClienteService {
     });
   }
 
-  // Rota POST /api/clientes/criar
-  // Necessita de token de funcionário (ATENDENTE, GERENTE)
+
   create(clienteData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/criar`, clienteData, { headers: this.getAuthHeaders() });
   }
 
-  // Rota GET /api/clientes/listar (se for diferente de usuarioService.getAllUsuarios())
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
   }

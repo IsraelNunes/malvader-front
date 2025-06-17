@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service'; // Para obter o token
 
 @Injectable({
   providedIn: 'root'
@@ -24,25 +24,27 @@ export class ContaService {
   }
 
   // Rotas administrativas (para funcionários)
-  // POST /api/contas/criar
-  // Necessita de token de funcionário (ATENDENTE, GERENTE)
   createConta(contaData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/criar`, contaData, { headers: this.getAuthHeaders() });
   }
 
-  // GET /api/contas/listar
-  // Necessita de token de funcionário (ESTAGIARIO, ATENDENTE, GERENTE)
   getAllContas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
   }
 
-  // GET /api/contas/:id
-  // Necessita de token de funcionário (ESTAGIARIO, ATENDENTE, GERENTE)
   getContaById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  // Rotas de operações financeiras (para clientes/funcionários) - futuras implementações
+  // **** NOVO MÉTODO PARA CLIENTE ****
+  // GET /api/contas/usuario/:idUsuario - Retorna contas vinculadas a um idUsuario
+  // O backend precisa implementar esta rota em contaRoutes.js
+  getContasByUsuarioId(idUsuario: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}`, { headers: this.getAuthHeaders() });
+  }
+  // **********************************
+
+  // Rotas de operações financeiras
   realizarDeposito(data: { numeroConta: string, valor: number, descricao?: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/deposito`, data, { headers: this.getAuthHeaders() });
   }

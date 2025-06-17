@@ -8,7 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { ListEntitiesComponent } from './list-entities/list-entities.component';
 import { CadastroUsuarioFormComponent } from './cadastro-usuario-form/cadastro-usuario-form.component';
-import { CadastroAgenciaFormComponent } from './cadastro-agencia-form/cadastro-agencia-form.component'; // <-- Importe esta linha
+import { CadastroAgenciaFormComponent } from './cadastro-agencia-form/cadastro-agencia-form.component'; 
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { CadastroAgenciaFormComponent } from './cadastro-agencia-form/cadastro-a
     CreateAccountComponent,
     ListEntitiesComponent,
     CadastroUsuarioFormComponent,
-    CadastroAgenciaFormComponent // <-- Declare este componente aqui
+    CadastroAgenciaFormComponent 
   ],
   imports: [
     CommonModule,

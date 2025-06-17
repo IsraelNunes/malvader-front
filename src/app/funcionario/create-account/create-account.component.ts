@@ -1,5 +1,3 @@
-// front/malvader-frontend/src/app/funcionario/create-account/create-account.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContaService } from '../../services/conta.service';
@@ -119,11 +117,11 @@ export class CreateAccountComponent implements OnInit {
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
-    
+
     console.log('DEBUG: Tentativa de submissão do formulário.');
     console.log('DEBUG: Status completo do formulário:', this.accountForm.status);
     console.log('DEBUG: Valor completo do formulário:', this.accountForm.value);
-    
+
     if (this.accountForm.invalid) {
       console.log('DEBUG: Formulário é inválido. Erros por controle:');
       Object.keys(this.accountForm.controls).forEach(key => {
@@ -134,27 +132,24 @@ export class CreateAccountComponent implements OnInit {
 
     if (this.accountForm.valid) {
       const rawFormData = this.accountForm.value;
-      
-      // Encontrar o CPF do cliente selecionado
+
       const selectedClient = this.usuariosClientes.find(client => client.id_usuario === rawFormData.id_cliente);
       if (!selectedClient || !selectedClient.cpf) {
         this.errorMessage = 'CPF do cliente não encontrado. Selecione um cliente válido.';
         return;
       }
 
-      // Construir o JSON conforme o backend espera
       let dadosEspecificos: any = {};
       const tipoConta = rawFormData.tipo_conta;
 
       if (tipoConta === 'POUPANCA') {
         dadosEspecificos = {
           taxaRendimento: rawFormData.taxa_rendimento
-          // ultimoRendimento (backend pode gerar ou não ser necessário no POST)
         };
       } else if (tipoConta === 'CORRENTE') {
         dadosEspecificos = {
           limite: rawFormData.limite,
-          dataVencimento: rawFormData.data_vencimento, // Backend espera "YYYY-MM-DD" para DATE
+          dataVencimento: rawFormData.data_vencimento,
           taxaManutencao: rawFormData.taxa_manutencao
         };
       } else if (tipoConta === 'INVESTIMENTO') {
@@ -166,10 +161,10 @@ export class CreateAccountComponent implements OnInit {
       }
 
       const payload = {
-        cpfCliente: selectedClient.cpf, // Usando o CPF do cliente
+        cpfCliente: selectedClient.cpf,
         idAgencia: rawFormData.id_agencia,
-        tipoConta: tipoConta, // CamelCase
-        saldoInicial: rawFormData.saldo, // Adicionado saldo inicial aqui
+        tipoConta: tipoConta,
+        saldoInicial: rawFormData.saldo,
         dadosEspecificos: dadosEspecificos
       };
 

@@ -2,13 +2,7 @@
   <h2>Bem-vindo ao Banco Malvader</h2>
   <h3>Login</h3>
 
-  <!-- REMOVIDO: toda a seção do toggle de modo 'Login' / 'Cadastre-se' -->
-
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <!-- REMOVIDO: toda a ng-container para cadastro de cliente -->
-    <!-- Os campos de cadastro de cliente (nome, cpf, data_nascimento, telefone, scoreCredito) não existem mais nesta tela. -->
-
-    <!-- Campo Email -->
     <div class="form-group">
       <label for="email">Email:</label>
       <input type="email" id="email" formControlName="email">
@@ -18,7 +12,6 @@
       </div>
     </div>
 
-    <!-- Campo Senha -->
     <div class="form-group">
       <label for="senha">Senha:</label>
       <input type="password" id="senha" formControlName="senha">
@@ -28,7 +21,6 @@
       </div>
     </div>
 
-    <!-- Campo OTP e Botão Gerar OTP -->
     <div class="form-group otp-section">
       <label for="otp">OTP (One-Time Password):</label>
       <div class="otp-input-button-group">

@@ -1,8 +1,6 @@
-// front/malvader-frontend/src/app/auth/auth.module.ts
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms'; // <-- Certifique-se que está importado
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
@@ -14,7 +12,7 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule, // <-- E aqui, no array imports
+    ReactiveFormsModule, 
     RouterModule
   ]
 })

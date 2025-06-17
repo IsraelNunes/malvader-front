@@ -1,4 +1,3 @@
-// front/malvader-frontend/src/app/funcionario/list-entities/list-entities.component.ts
 import { Component, OnInit, Input } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { ContaService } from '../../services/conta.service';
@@ -9,7 +8,7 @@ import { ContaService } from '../../services/conta.service';
   styleUrls: ['./list-entities.component.scss']
 })
 export class ListEntitiesComponent implements OnInit {
-  @Input() type: 'usuarios' | 'contas' = 'usuarios'; // Tipo de listagem (input property)
+  @Input() type: 'usuarios' | 'contas' = 'usuarios';
   entities: any[] = [];
   errorMessage: string = '';
 

@@ -2,16 +2,26 @@
   max-width: 900px;
   margin: 50px auto;
   padding: 30px;
-  background-color: #2c2c2c; // Cor de fundo do card
+  background-color: #2c2c2c;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   text-align: center;
   color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   h2 {
-    color: #ff7a00; // Laranja
+    color: #ff7a00;
     margin-bottom: 20px;
     font-size: 2em;
+  }
+
+  h3 {
+    color: #ff7a00;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 10px;
+    text-align: center;
   }
 
   p {
@@ -20,7 +30,7 @@
   }
 
   .highlight {
-    color: #ff7a00; // Laranja para nomes/CPFs
+    color: #ff7a00;
     font-weight: bold;
   }
 
@@ -31,27 +41,62 @@
     gap: 15px;
     margin-top: 30px;
     margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #383838;
+  }
 
-    .nav-button {
-      background-color: #ff7a00; // Laranja
-      color: #1a1a1a; // Texto escuro
-      border: none;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-size: 1.05em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+  .nav-button {
+    background-color: #ff7a00;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    flex-shrink: 0;
 
-      &:hover {
-        background-color: #cc6200; // Laranja mais escuro
-        transform: translateY(-2px);
+    &:hover {
+      background-color: #cc6200;
+      transform: translateY(-2px);
+    }
+  }
+
+  .main-content-section {
+    margin-top: 30px;
+    padding-top: 20px;
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+
+      th, td {
+        border: 1px solid #1a1a1a;
+        padding: 12px;
+        text-align: left;
+        font-size: 0.95em;
+      }
+
+      th {
+        background-color: #1a1a1a;
+        color: #ff7a00;
+        font-weight: bold;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #383838;
+      }
+
+      tbody tr:hover {
+        background-color: #444444;
       }
     }
   }
 
   .logout-btn {
-    background-color: #dc3545; // Vermelho para sair
+    background-color: #dc3545;
     color: white;
     border: none;
     padding: 12px 25px;
@@ -59,6 +104,7 @@
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 40px;
 
     &:hover {
       background-color: #c82333;

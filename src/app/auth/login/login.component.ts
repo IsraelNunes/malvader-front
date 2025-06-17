@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-// REMOVIDA: import { UsuarioService } from '../../services/usuario.service'; // Este import não é mais necessário aqui
 
 @Component({
   selector: 'app-login',
@@ -13,35 +12,25 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
-  // REMOVIDA: currentMode: 'login' | 'registerClient' = 'login'; // Esta propriedade não existe mais
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    // REMOVIDA: private usuarioService: UsuarioService // Esta injeção não existe mais
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    // REMOVIDA: this.switchMode('login'); // Esta chamada não existe mais
   }
 
-  /**
-   * Inicializa a estrutura do formulário APENAS para login (Email, Senha, OTP).
-   */
   initForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required],
-      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]] // OTP de 6 dígitos
+      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]]
     });
   }
 
-  /**
-   * Solicita um código OTP ao backend, usando o e-mail do usuário.
-   * Este método é chamado pelo botão "Gerar OTP".
-   */
   requestOtp(): void {
     this.errorMessage = '';
     this.successMessage = '';
@@ -49,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     if (!email || !this.loginForm.get('email')?.valid) {
       this.errorMessage = 'Por favor, insira um email válido para solicitar o OTP.';
-      this.loginForm.get('email')?.markAsTouched(); // Marca o campo como touched para exibir erro de validação
+      this.loginForm.get('email')?.markAsTouched();
       return;
     }
 
@@ -65,20 +54,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /**
-   * Manipula a submissão do formulário, realizando o login completo.
-   */
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
 
     if (this.loginForm.invalid) {
       this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
-      this.loginForm.markAllAsTouched(); // Marca todos os campos como touched para exibir erros
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    // Lógica APENAS para Login completo (Email, Senha, OTP)
     const { email, senha, otp } = this.loginForm.value;
     this.authService.login(email, senha, otp).subscribe({
       next: (response) => {
@@ -96,9 +81,8 @@ export class LoginComponent implements OnInit {
             console.log('Redirecionando para Painel do Cliente');
             this.router.navigate(['/cliente/dashboard']);
           } else {
-            // Caso o tipo de usuário seja desconhecido (JWT inválido ou payload incompleto)
             this.errorMessage = 'Tipo de usuário desconhecido ou token inválido. Por favor, contate o suporte.';
-            this.authService.logout(); // Desloga o usuário
+            this.authService.logout();
           }
         }, 1000);
       },

@@ -1,20 +1,17 @@
-// Cores base do tema (importadas ou redefinidas para contexto)
 $primary-dark: #1a1a1a;
 $secondary-dark: #2c2c2c;
 $text-light: #e0e0e0;
 $text-muted: #aaaaaa;
 
-// Cores de destaque (inspiradas no laranja do Inter)
 $accent-orange: #ff7a00;
 $accent-orange-dark: #cc6200;
 
-// Cores de feedback
 $success-color: #28a745;
 $error-color: #dc3545;
 
 .login-container {
-  max-width: 450px; /* Reduz a largura para o formulário de login mais simples */
-  margin: 80px auto; /* Centraliza */
+  max-width: 450px;
+  margin: 80px auto;
   padding: 30px;
   border: 1px solid $secondary-dark;
   border-radius: 10px;
@@ -38,15 +35,10 @@ $error-color: #dc3545;
     padding-bottom: 10px;
   }
 
-  /* REMOVIDO: ESTILO DE .mode-toggle */
-  /*
-  .mode-toggle { ... }
-  */
-
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Espaçamento entre os form-groups */
+    gap: 20px;
   }
 
   .form-group {
@@ -65,8 +57,8 @@ $error-color: #dc3545;
   input[type="text"],
   input[type="password"],
   input[type="email"],
-  input[type="number"], /* Adicionado para garantir estilo para inputs numéricos, se usados */
-  input[type="date"], /* Adicionado para garantir estilo para inputs de data, se usados */
+  input[type="number"],
+  input[type="date"],
   select {
     width: 100%;
     padding: 12px;

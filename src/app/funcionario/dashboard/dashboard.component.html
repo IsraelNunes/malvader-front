@@ -4,17 +4,12 @@
   <p>Seu ID de usuário: {{ idUsuario }}</p>
 
   <nav class="dashboard-nav">
-    <!-- Botões de navegação para as seções -->
     <button class="nav-button" (click)="activeSection = 'createAccount'">Abrir Conta</button>
-    
-    <!-- Botão de Cadastrar Cliente -->
-    <!-- Visível para ATENDENTE e GERENTE, conforme regra de negócio e permissão do token -->
+
     <ng-container *ngIf="cargoUsuario === 'ATENDENTE' || cargoUsuario === 'GERENTE'">
       <button class="nav-button" (click)="activeSection = 'createClient'">Cadastrar Cliente</button>
     </ng-container>
-    
-    <!-- Botão de Cadastrar Funcionário e Cadastrar Agência -->
-    <!-- Visíveis APENAS para GERENTE, conforme regra de negócio e permissão do token -->
+
     <ng-container *ngIf="cargoUsuario === 'GERENTE'">
       <button class="nav-button" (click)="activeSection = 'createEmployee'">Cadastrar Funcionário</button>
       <button class="nav-button" (click)="activeSection = 'createAgency'">Cadastrar Agência</button>
@@ -26,26 +21,17 @@
   </nav>
 
   <div class="main-content-section">
-    <!-- Seções de Conteúdo (visíveis com base na activeSection) -->
-    <!-- Seção de Abertura de Conta -->
     <app-create-account *ngIf="activeSection === 'createAccount'"></app-create-account>
-    
-    <!-- Seção de Cadastro de Cliente -->
-    <!-- Reutiliza o componente 'cadastro-usuario-form' passando tipoCadastro='cliente' -->
+
     <app-cadastro-usuario-form *ngIf="activeSection === 'createClient'" [tipoCadastro]="'cliente'"></app-cadastro-usuario-form>
-    
-    <!-- Seção de Cadastro de Funcionário -->
-    <!-- Reutiliza o componente 'cadastro-usuario-form' passando tipoCadastro='funcionario' -->
+
     <app-cadastro-usuario-form *ngIf="activeSection === 'createEmployee'" [tipoCadastro]="'funcionario'"></app-cadastro-usuario-form>
 
-    <!-- Seção de Cadastro de Agência -->
     <app-cadastro-agencia-form *ngIf="activeSection === 'createAgency'"></app-cadastro-agencia-form>
 
-    <!-- Seções de Listagem -->
     <app-list-entities *ngIf="activeSection === 'listUsers'" [type]="'usuarios'"></app-list-entities>
     <app-list-entities *ngIf="activeSection === 'listAccounts'" [type]="'contas'"></app-list-entities>
-    
-    <!-- Seção de Relatórios (placeholder) -->
+
     <div *ngIf="activeSection === 'reports'">
       <h3>Gerar Relatórios (Em Breve)</h3>
       <p>Funcionalidade de relatórios será implementada aqui.</p>

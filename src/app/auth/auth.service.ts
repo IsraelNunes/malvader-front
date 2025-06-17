@@ -1,5 +1,3 @@
-// front/malvader-frontend/src/app/auth/auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
@@ -10,38 +8,21 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api/usuarios';
 
-  // Informações temporárias (temp*) REMOVIDAS, pois não há mais fluxo de 2 etapas.
-  /*
-  private tempIdUsuario: string | null = null;
-  private tempTipoUsuario: string | null = null;
-  private tempIdentificador: string | null = null;
-  private tempEmail: string | null = null;
-  private tempSenha: string | null = null;
-  */
-
   constructor(private http: HttpClient) { }
 
-  // Método para solicitar a geração de OTP
-  // Recebe apenas email (o backend buscará o idUsuario por ele)
   requestOtp(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/solicitar-otp`, { email });
   }
 
-  // Método de login ÚNICO e COMPLETO: recebe email, senha e OTP
-  // O backend DEVE validar tudo e retornar o JWT e infos do usuário.
   login(email: string, senha: string, otp: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, senha, otp }).pipe(
       tap((response: any) => {
-        if (response && response.token) { // Token é o mínimo que esperamos
+        if (response && response.token) {
           this.setToken(response.token);
-          // Se o backend retorna o objeto 'usuario', use-o.
-          // CASO CONTRÁRIO (se só retorna token), 'setUsuarioInfo' irá decodificar do token.
           if (response.usuario) {
             this.setUsuarioInfo(response.usuario);
           } else {
-            // Este console.warn é importante para depuração se o backend não estiver retornando 'usuario'
             console.warn("AuthService: Objeto 'usuario' ausente na resposta do login. As informações serão obtidas do token JWT.");
-            // setUsuarioInfo é chamado aqui com o que puder ser extraído do token
             const decodedToken = this.parseJwt(response.token);
             if (decodedToken) {
               const userFromToken = {
@@ -60,7 +41,6 @@ export class AuthService {
     );
   }
 
-  // Helper para decodificar JWT (mantido, pois será usado nos getters)
   private parseJwt(token: string): any {
     try {
       const base64Url = token.split('.')[1];
@@ -75,8 +55,6 @@ export class AuthService {
     }
   }
 
-  // --- Métodos para Gerenciar o Token e Informações do Usuário no Local Storage ---
-
   setToken(token: string) {
     localStorage.setItem('malvaderAuthToken', token);
   }
@@ -85,7 +63,6 @@ export class AuthService {
     return localStorage.getItem('malvaderAuthToken');
   }
 
-  // setUsuarioInfo agora é chamado com um objeto que pode vir da resposta direta ou do JWT decodificado
   setUsuarioInfo(usuario: any) {
     localStorage.setItem('malvaderUsuarioId', usuario.idUsuario);
     localStorage.setItem('malvaderUsuarioNome', usuario.nome);
@@ -95,7 +72,6 @@ export class AuthService {
     localStorage.setItem('malvaderUsuarioEmail', usuario.email);
   }
 
-  // Getters para informações do usuário (com fallback para token)
   getUsuarioId(): string | null {
     let id = localStorage.getItem('malvaderUsuarioId');
     if (!id) { const token = this.getToken(); if (token) { const decoded = this.parseJwt(token); if (decoded && decoded.idUsuario) { localStorage.setItem('malvaderUsuarioId', decoded.idUsuario); id = decoded.idUsuario; } } }
@@ -141,12 +117,4 @@ export class AuthService {
     localStorage.removeItem('malvaderUsuarioEmail');
     console.log('AuthService: Usuário deslogado. Informações removidas do Local Storage.');
   }
-
-  // Métodos temp* removidos, pois não há fluxo de 2 etapas.
-  /*
-  setTempLoginInfo(...){...}
-  getTempIdUsuario(){...}
-  // ... e os outros getTemp...
-  clearTempLoginInfo(){...}
-  */
 }
