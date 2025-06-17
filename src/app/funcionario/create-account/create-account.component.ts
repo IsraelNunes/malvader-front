@@ -164,7 +164,7 @@ export class CreateAccountComponent implements OnInit {
         cpfCliente: selectedClient.cpf,
         idAgencia: rawFormData.id_agencia,
         tipoConta: tipoConta,
-        saldoInicial: rawFormData.saldo,
+        saldo: rawFormData.saldo,
         dadosEspecificos: dadosEspecificos
       };
 
