@@ -1,6 +1,6 @@
 /* front/malvader-frontend/src/app/funcionario/cadastro-usuario-form/cadastro-usuario-form.component.scss */
 
-// Cores base do tema (importadas ou redefinidas para contexto)
+// Cores base do tema
 $primary-dark: #1a1a1a;
 $secondary-dark: #2c2c2c;
 $text-light: #e0e0e0;
@@ -11,90 +11,88 @@ $success-color: #28a745;
 $error-color: #dc3545;
 
 .cadastro-usuario-form-container {
-  max-width: 700px; /* Largura máxima do contêiner do formulário */
-  margin: 30px auto; /* Centraliza o contêiner */
-  padding: 25px; /* Preenchimento interno */
-  background-color: $secondary-dark; /* Cor de fundo do card */
-  border-radius: 10px; /* Cantos arredondados */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra para profundidade */
-  color: $text-light; /* Cor do texto padrão */
-  text-align: left; /* Alinhamento do texto */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte padrão */
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: $secondary-dark;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  color: $text-light;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   h3 {
-    color: $accent-orange; /* Título principal em laranja */
-    margin-bottom: 25px; /* Espaçamento abaixo do título */
-    font-size: 1.6em; /* Tamanho da fonte */
-    border-bottom: 2px solid $primary-dark; /* Linha divisória */
-    padding-bottom: 10px; /* Preenchimento sob a linha */
-    text-align: center; /* Centraliza o título */
+    color: #ff7a00;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    border-bottom: 2px solid $primary-dark;
+    padding-bottom: 10px;
+    text-align: center;
   }
 
   form {
-    display: flex; /* Usa Flexbox para organizar as seções do formulário */
-    flex-direction: column; /* Empilha as seções verticalmente */
-    gap: 20px; /* Espaçamento entre as seções (form-section) */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .form-section {
-    padding: 20px; /* Preenchimento interno de cada seção */
-    border: 1px solid #383838; /* Borda sutil */
-    border-radius: 8px; /* Cantos arredondados */
-    background-color: $primary-dark; /* Fundo de cada seção (mais escuro) */
+    padding: 20px;
+    border: 1px solid #383838;
+    border-radius: 8px;
+    background-color: #1a1a1a;
     
     h4 {
-      color: $text-light; /* Cor do título da seção */
-      margin-bottom: 20px; /* Espaçamento abaixo do título */
-      font-size: 1.2em; /* Tamanho da fonte */
-      border-bottom: 1px dashed #555; /* Linha divisória tracejada */
-      padding-bottom: 10px; /* Preenchimento sob a linha */
-      text-align: center; /* Centraliza o título da seção */
+      color: #e0e0e0;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      border-bottom: 1px dashed #555;
+      padding-bottom: 10px;
+      text-align: center;
     }
 
     .form-group {
-      margin-bottom: 15px; /* Espaçamento entre os campos dentro de uma seção */
-      display: block; /* Garante que cada form-group ocupe sua própria linha */
-      width: 100%; /* Garante que o form-group ocupe a largura total */
+      margin-bottom: 15px;
+      display: block;
+      width: 100%;
 
       label {
-        display: block; /* Cada label em sua própria linha */
-        margin-bottom: 8px; /* Espaçamento abaixo da label */
-        font-weight: bold; /* Negrito */
-        color: $text-light; /* Cor do texto */
-        font-size: 0.95em; /* Tamanho da fonte */
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #e0e0e0;
+        font-size: 0.95em;
       }
 
-      /* Seletor unificado para TODOS os tipos de input e selects */
       input[type="text"],
       input[type="password"],
       input[type="email"],
       input[type="number"],
-      input[type="date"], /* Garante que input type="date" seja estilizado */
+      input[type="date"],
       select {
-        width: 100%; /* Inputs e selects ocupam 100% da largura disponível */
-        padding: 12px; /* Preenchimento interno */
-        border: 1px solid #444; /* Borda */
-        border-radius: 6px; /* Cantos arredondados */
-        box-sizing: border-box; /* Inclui padding e border no width/height */
-        font-size: 1em; /* Tamanho da fonte */
-        background-color: #383838; /* Fundo do input */
-        color: #e0e0e0; /* Cor do texto no input */
-        transition: border-color 0.3s ease; /* Transição suave na borda */
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #444;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 1em;
+        background-color: #383838;
+        color: #e0e0e0;
+        transition: border-color 0.3s ease;
 
         &:focus {
-          border-color: $accent-orange; /* Borda laranja no foco */
-          outline: none; /* Remove o outline padrão */
-          box-shadow: 0 0 0 0.2rem rgba($accent-orange, 0.4); /* Sombra laranja no foco */
+          border-color: $accent-orange;
+          outline: none;
+          box-shadow: 0 0 0 0.2rem rgba($accent-orange, 0.4);
         }
 
-        /* Estilo para placeholder */
         &::placeholder {
-          color: $text-muted; /* Cor mais suave para o placeholder */
-          opacity: 0.7; /* Transparência para o placeholder */
+          color: $text-muted;
+          opacity: 0.7;
         }
       }
 
-      select { /* Estilos específicos para o select, para remover a seta padrão */
+      select {
         appearance: none;
         background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff7a00%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.1%2C4.1-9.1%2C6.1-14.2%2C6.1c-5.1%2C0-10.1-2-14.2-6.1L5.4%2C114.7c-4.1-4.1-6.1-9.1-6.1-14.2%2C0-5.1%2C2-10.1%2C6.1-14.2l12.7-12.7c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1L145.2%2C174c4.1%2C4.1%2C9.1%2C6.1%2C14.2%2C6.1c5.1%2C0%2C10.1-2%2C14.2-6.1l117.8-117.8c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1l12.7%2C12.7c4.1-4.1%2C6.1%2C9.1%2C6.1%2C14.2C293.1%2C105.6%2C291.1%2C110.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
         background-repeat: no-repeat;
@@ -127,15 +125,15 @@ $error-color: #dc3545;
       }
 
       &:disabled {
-        background-color: rgba($accent-orange, 0.4);
+        background-color: rgba(#ff7a00, 0.4);
         cursor: not-allowed;
       }
     }
 
     .alert-error {
-      color: $error-color;
-      background-color: rgba($error-color, 0.15);
-      border: 1px solid rgba($error-color, 0.3);
+      color: #dc3545;
+      background-color: rgba(#dc3545, 0.15);
+      border: 1px solid rgba(#dc3545, 0.3);
       padding: 10px;
       border-radius: 4px;
       margin-top: 20px;
@@ -144,9 +142,9 @@ $error-color: #dc3545;
     }
 
     .alert-success {
-      color: $success-color;
-      background-color: rgba($success-color, 0.15);
-      border: 1px solid rgba($success-color, 0.3);
+      color: #28a745;
+      background-color: rgba(#28a745, 0.15);
+      border: 1px solid rgba(#28a745, 0.3);
       padding: 10px;
       border-radius: 4px;
       margin-top: 20px;
