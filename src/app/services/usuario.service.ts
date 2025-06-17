@@ -9,8 +9,12 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class UsuarioService {
-  // A URL base para outras rotas (como /listar)
-  private apiUrl = 'http://localhost:3000/api/clientes/criar';
+  // URL base para operações GERAIS de usuários (como listar)
+  // Baseado no seu `server.js` que faz `app.use('/api/usuarios', usuarioRoutes);`
+  private usuariosApiUrl = 'http://localhost:3000/api/usuarios';
+
+  // URL específica para a criação de clientes
+  private clientesCriarApiUrl = 'http://localhost:3000/api/clientes/criar';
 
   constructor(
     private http: HttpClient,
@@ -25,21 +29,19 @@ export class UsuarioService {
     });
   }
 
-  // Rota GET /api/usuarios/listar
+  // Rota GET /api/usuarios/listar (para listar todos os usuários)
   getAllUsuarios(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
+    return this.http.get<any[]>(`${this.usuariosApiUrl}/listar`, { headers: this.getAuthHeaders() });
   }
 
   // Rota GET /api/usuarios/:id
   getUsuarioById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${this.usuariosApiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  // MÉTODO PARA CRIAR CLIENTE - CHAMANDO A ROTA ESPECÍFICA DE CLIENTES
-  // O frontend enviará { "usuario": {...}, "cliente": {...} }
+  // Rota POST para criar um usuário/cliente
+  // Chamará http://localhost:3000/api/clientes/criar
   createUsuario(payload: any): Observable<any> {
-    // ESTA É A URL EXATA QUE O BACKEND ESPERA PARA CRIAR CLIENTES:
-    // http://localhost:3000/api/clientes/criar
-    return this.http.post<any>('http://localhost:3000/api/clientes/criar', payload, { headers: this.getAuthHeaders() });
+    return this.http.post<any>(this.clientesCriarApiUrl, payload, { headers: this.getAuthHeaders() });
   }
 }

@@ -1,1 +1,83 @@
-<p>cadastro-agencia-form works!</p>
+<div class="cadastro-agencia-form-container">
+  <h3>Cadastrar Nova Agência</h3>
+
+  <form [formGroup]="agenciaForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h4>Dados da Agência</h4>
+      <div class="form-group">
+        <label for="nome">Nome da Agência:</label>
+        <input type="text" id="nome" formControlName="nome" placeholder="Ex: Matriz Central">
+        <div *ngIf="agenciaForm.get('nome')?.invalid && agenciaForm.get('nome')?.touched" class="error-message">
+          Nome é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="codigoAgencia">Código da Agência:</label>
+        <input type="text" id="codigoAgencia" formControlName="codigoAgencia" placeholder="Ex: 001">
+        <div *ngIf="agenciaForm.get('codigoAgencia')?.invalid && agenciaForm.get('codigoAgencia')?.touched" class="error-message">
+          Código é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Endereço da Agência</h4>
+      <div class="form-group">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" formControlName="cep" placeholder="Apenas números">
+        <div *ngIf="agenciaForm.get('cep')?.invalid && agenciaForm.get('cep')?.touched" class="error-message">
+          CEP é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="local">Logradouro:</label>
+        <input type="text" id="local" formControlName="local" placeholder="Ex: Av. Principal">
+        <div *ngIf="agenciaForm.get('local')?.invalid && agenciaForm.get('local')?.touched" class="error-message">
+          Logradouro é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="numeroCasa">Número:</label>
+        <input type="number" id="numeroCasa" formControlName="numeroCasa" placeholder="Ex: 123">
+        <div *ngIf="agenciaForm.get('numeroCasa')?.invalid && agenciaForm.get('numeroCasa')?.touched" class="error-message">
+          Número é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro" formControlName="bairro" placeholder="Ex: Centro">
+        <div *ngIf="agenciaForm.get('bairro')?.invalid && agenciaForm.get('bairro')?.touched" class="error-message">
+          Bairro é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" formControlName="cidade" placeholder="Ex: São Paulo">
+        <div *ngIf="agenciaForm.get('cidade')?.invalid && agenciaForm.get('cidade')?.touched" class="error-message">
+          Cidade é obrigatória.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado (UF):</label>
+        <input type="text" id="estado" formControlName="estado" maxlength="2" placeholder="Ex: SP">
+        <div *ngIf="agenciaForm.get('estado')?.invalid && agenciaForm.get('estado')?.touched" class="error-message">
+          <div *ngIf="agenciaForm.get('estado')?.errors?.['required']">Estado é obrigatório.</div>
+          <div *ngIf="agenciaForm.get('estado')?.errors?.['pattern']">Estado deve ter 2 letras maiúsculas (UF).</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="complemento">Complemento (Opcional):</label>
+        <input type="text" id="complemento" formControlName="complemento" placeholder="Ex: Sala 405">
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!agenciaForm.valid">Cadastrar Agência</button>
+
+    <div *ngIf="errorMessage" class="alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+</div>
