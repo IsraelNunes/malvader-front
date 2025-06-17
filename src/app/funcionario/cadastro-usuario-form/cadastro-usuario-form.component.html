@@ -6,7 +6,7 @@
       <h4>Dados Pessoais</h4>
       <div class="form-group">
         <label for="nome">Nome Completo:</label>
-        <input type="text" id="nome" formControlName="nome">
+        <input type="text" id="nome" formControlName="nome" placeholder="Seu nome completo">
         <div *ngIf="usuarioForm.get('nome')?.invalid && usuarioForm.get('nome')?.touched" class="error-message">
           Nome é obrigatório.
         </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email">
+        <input type="email" id="email" formControlName="email" placeholder="seu.email@exemplo.com">
         <div *ngIf="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched" class="error-message">
           <div *ngIf="usuarioForm.get('email')?.errors?.['required']">Email é obrigatório.</div>
           <div *ngIf="usuarioForm.get('email')?.errors?.['email']">Email inválido.</div>
@@ -44,7 +44,7 @@
       </div>
       <div class="form-group">
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" formControlName="senha">
+        <input type="password" id="senha" formControlName="senha" placeholder="Mínimo 8 caracteres">
         <div *ngIf="usuarioForm.get('senha')?.invalid && usuarioForm.get('senha')?.touched" class="error-message">
           <div *ngIf="usuarioForm.get('senha')?.errors?.['required']">Senha é obrigatória.</div>
           <div *ngIf="usuarioForm.get('senha')?.errors?.['minlength']">Senha deve ter no mínimo 8 caracteres.</div>
@@ -52,7 +52,19 @@
       </div>
     </div>
 
-    <!-- Informações do Funcionário - Visíveis apenas se tipoCadastro for 'funcionario' -->
+    <!-- Informações do Cliente / Funcionário -->
+    <div class="form-section" *ngIf="tipoCadastro === 'cliente'">
+      <h4>Informações do Cliente</h4>
+      <div class="form-group">
+        <label for="scoreCredito">Score de Crédito:</label>
+        <input type="number" id="scoreCredito" formControlName="scoreCredito" min="0" placeholder="0 a 1000">
+        <div *ngIf="usuarioForm.get('scoreCredito')?.invalid && usuarioForm.get('scoreCredito')?.touched" class="error-message">
+          <div *ngIf="usuarioForm.get('scoreCredito')?.errors?.['required']">Score de crédito é obrigatório.</div>
+          <div *ngIf="usuarioForm.get('scoreCredito')?.errors?.['min']">Score deve ser no mínimo 0.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="form-section" *ngIf="tipoCadastro === 'funcionario'">
       <h4>Informações do Funcionário</h4>
       <div class="form-group">
@@ -63,39 +75,6 @@
         <div *ngIf="usuarioForm.get('cargo')?.invalid && usuarioForm.get('cargo')?.touched" class="error-message">
           Cargo é obrigatório.
         </div>
-      </div>
-    </div>
-
-    <!-- Seção de Endereço - Opcional -->
-    <div class="form-section">
-      <h4>Endereço (Opcional nesta etapa)</h4>
-      <div class="form-group">
-        <label for="cep">CEP:</label>
-        <input type="text" id="cep" formControlName="cep" placeholder="Apenas números">
-      </div>
-      <div class="form-group">
-        <label for="local">Logradouro:</label>
-        <input type="text" id="local" formControlName="local">
-      </div>
-      <div class="form-group">
-        <label for="numero_casa">Número:</label>
-        <input type="number" id="numero_casa" formControlName="numero_casa">
-      </div>
-      <div class="form-group">
-        <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro" formControlName="bairro">
-      </div>
-      <div class="form-group">
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" formControlName="cidade">
-      </div>
-      <div class="form-group">
-        <label for="estado">Estado (UF):</label>
-        <input type="text" id="estado" formControlName="estado" maxlength="2">
-      </div>
-      <div class="form-group">
-        <label for="complemento">Complemento (Opcional):</label>
-        <input type="text" id="complemento" formControlName="complemento">
       </div>
     </div>
 

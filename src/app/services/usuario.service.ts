@@ -1,4 +1,5 @@
 // front/malvader-frontend/src/app/services/usuario.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +9,8 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:3000/api/usuarios'; // Rota base para usuários
+  // A URL base para outras rotas (como /listar)
+  private apiUrl = 'http://localhost:3000/api/clientes/criar';
 
   constructor(
     private http: HttpClient,
@@ -24,18 +26,20 @@ export class UsuarioService {
   }
 
   // Rota GET /api/usuarios/listar
-  // Necessita de token de funcionário (GERENTE, ATENDENTE, ESTAGIARIO)
   getAllUsuarios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar`, { headers: this.getAuthHeaders() });
   }
 
-  // Rota GET /api/usuarios/:id (para buscar detalhes de um usuário específico, se necessário)
+  // Rota GET /api/usuarios/:id
   getUsuarioById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  // Rota POST /api/usuarios/criar (se o frontend for criar usuários base diretamente)
-  createUsuario(userData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/criar`, userData, { headers: this.getAuthHeaders() });
+  // MÉTODO PARA CRIAR CLIENTE - CHAMANDO A ROTA ESPECÍFICA DE CLIENTES
+  // O frontend enviará { "usuario": {...}, "cliente": {...} }
+  createUsuario(payload: any): Observable<any> {
+    // ESTA É A URL EXATA QUE O BACKEND ESPERA PARA CRIAR CLIENTES:
+    // http://localhost:3000/api/clientes/criar
+    return this.http.post<any>('http://localhost:3000/api/clientes/criar', payload, { headers: this.getAuthHeaders() });
   }
 }

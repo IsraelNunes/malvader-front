@@ -11,22 +11,22 @@ $success-color: #28a745;
 $error-color: #dc3545;
 
 .cadastro-usuario-form-container {
-  max-width: 700px; /* Largura máxima para o contêiner do formulário */
-  margin: 30px auto; /* Centraliza o contêiner horizontalmente com margem superior/inferior */
-  padding: 25px; /* Preenchimento interno do contêiner */
-  background-color: $secondary-dark; /* Cor de fundo do card do formulário */
+  max-width: 700px; /* Largura máxima do contêiner do formulário */
+  margin: 30px auto; /* Centraliza o contêiner */
+  padding: 25px; /* Preenchimento interno */
+  background-color: $secondary-dark; /* Cor de fundo do card */
   border-radius: 10px; /* Cantos arredondados */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra para profundidade */
   color: $text-light; /* Cor do texto padrão */
-  text-align: left; /* Alinha o texto à esquerda */
+  text-align: left; /* Alinhamento do texto */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte padrão */
 
   h3 {
     color: $accent-orange; /* Título principal em laranja */
     margin-bottom: 25px; /* Espaçamento abaixo do título */
-    font-size: 1.6em; /* Tamanho da fonte do título */
-    border-bottom: 2px solid $primary-dark; /* Linha divisória sob o título */
-    padding-bottom: 10px; /* Preenchimento sob a linha divisória */
+    font-size: 1.6em; /* Tamanho da fonte */
+    border-bottom: 2px solid $primary-dark; /* Linha divisória */
+    padding-bottom: 10px; /* Preenchimento sob a linha */
     text-align: center; /* Centraliza o título */
   }
 
@@ -37,15 +37,15 @@ $error-color: #dc3545;
   }
 
   .form-section {
-    padding: 20px; /* Preenchimento interno de cada seção do formulário */
-    border: 1px solid #383838; /* Borda sutil para cada seção */
-    border-radius: 8px; /* Cantos arredondados para as seções */
-    background-color: $primary-dark; /* Fundo de cada seção (mais escuro que o contêiner principal) */
+    padding: 20px; /* Preenchimento interno de cada seção */
+    border: 1px solid #383838; /* Borda sutil */
+    border-radius: 8px; /* Cantos arredondados */
+    background-color: $primary-dark; /* Fundo de cada seção (mais escuro) */
     
     h4 {
       color: $text-light; /* Cor do título da seção */
-      margin-bottom: 20px; /* Espaçamento abaixo do título da seção */
-      font-size: 1.2em; /* Tamanho da fonte do título da seção */
+      margin-bottom: 20px; /* Espaçamento abaixo do título */
+      font-size: 1.2em; /* Tamanho da fonte */
       border-bottom: 1px dashed #555; /* Linha divisória tracejada */
       padding-bottom: 10px; /* Preenchimento sob a linha */
       text-align: center; /* Centraliza o título da seção */
@@ -53,6 +53,8 @@ $error-color: #dc3545;
 
     .form-group {
       margin-bottom: 15px; /* Espaçamento entre os campos dentro de uma seção */
+      display: block; /* Garante que cada form-group ocupe sua própria linha */
+      width: 100%; /* Garante que o form-group ocupe a largura total */
 
       label {
         display: block; /* Cada label em sua própria linha */
@@ -62,10 +64,12 @@ $error-color: #dc3545;
         font-size: 0.95em; /* Tamanho da fonte */
       }
 
+      /* Seletor unificado para TODOS os tipos de input e selects */
       input[type="text"],
-      input[type="number"],
-      input[type="date"],
       input[type="password"],
+      input[type="email"],
+      input[type="number"],
+      input[type="date"], /* Garante que input type="date" seja estilizado */
       select {
         width: 100%; /* Inputs e selects ocupam 100% da largura disponível */
         padding: 12px; /* Preenchimento interno */
@@ -74,7 +78,7 @@ $error-color: #dc3545;
         box-sizing: border-box; /* Inclui padding e border no width/height */
         font-size: 1em; /* Tamanho da fonte */
         background-color: #383838; /* Fundo do input */
-        color: $text-light; /* Cor do texto no input */
+        color: #e0e0e0; /* Cor do texto no input */
         transition: border-color 0.3s ease; /* Transição suave na borda */
 
         &:focus {
@@ -82,67 +86,72 @@ $error-color: #dc3545;
           outline: none; /* Remove o outline padrão */
           box-shadow: 0 0 0 0.2rem rgba($accent-orange, 0.4); /* Sombra laranja no foco */
         }
+
+        /* Estilo para placeholder */
+        &::placeholder {
+          color: $text-muted; /* Cor mais suave para o placeholder */
+          opacity: 0.7; /* Transparência para o placeholder */
+        }
       }
 
-      select {
-        appearance: none; /* Remove a seta padrão do select */
-        // Ícone de seta personalizado para o select (laranja)
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff7a00%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.1%2C4.1-9.1%2C6.1-14.2%2C6.1c-5.1%2C0-10.1-2-14.2-6.1L5.4%2C114.7c-4.1-4.1-6.1-9.1-6.1-14.2%2C0-5.1%2C2-10.1%2C6.1-14.2l12.7-12.7c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1L145.2%2C174c4.1%2C4.1%2C9.1%2C6.1%2C14.2%2C6.1c5.1%2C0%2C10.1-2%2C14.2-6.1l117.8-117.8c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1l12.7%2C12.7c4.1%2C4.1%2C6.1%2C9.1%2C6.1%2C14.2C293.1%2C105.6%2C291.1%2C110.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 12px;
+      select { /* Estilos específicos para o select, para remover a seta padrão */
+        appearance: none;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff7a00%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.1%2C4.1-9.1%2C6.1-14.2%2C6.1c-5.1%2C0-10.1-2-14.2-6.1L5.4%2C114.7c-4.1-4.1-6.1-9.1-6.1-14.2%2C0-5.1%2C2-10.1%2C6.1-14.2l12.7-12.7c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1L145.2%2C174c4.1%2C4.1%2C9.1%2C6.1%2C14.2%2C6.1c5.1%2C0%2C10.1-2%2C14.2-6.1l117.8-117.8c4.1-4.1%2C9.1-6.1%2C14.2-6.1c5.1%2C0%2C10.1%2C2%2C14.2%2C6.1l12.7%2C12.7c4.1-4.1%2C6.1%2C9.1%2C6.1%2C14.2C293.1%2C105.6%2C291.1%2C110.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+      }
+
+      .error-message {
+        color: $error-color;
+        font-size: 0.85em;
+        margin-top: 5px;
+      }
+    }
+    
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: $accent-orange;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background-color: $accent-orange-dark;
+      }
+
+      &:disabled {
+        background-color: rgba($accent-orange, 0.4);
+        cursor: not-allowed;
+      }
     }
 
-    .error-message {
-      color: $error-color; /* Cor de erro */
-      font-size: 0.85em; /* Tamanho da fonte */
-      margin-top: 5px; /* Espaçamento superior */
-    }
-  }
-  
-  button[type="submit"] {
-    width: 100%; /* Ocupa a largura total */
-    padding: 12px; /* Preenchimento */
-    background-color: $accent-orange; /* Fundo laranja */
-    color: $primary-dark; /* Texto escuro */
-    border: none; /* Sem borda */
-    border-radius: 6px; /* Cantos arredondados */
-    cursor: pointer; /* Cursor de ponteiro */
-    font-size: 1.1em; /* Tamanho da fonte */
-    font-weight: bold; /* Negrito */
-    margin-top: 20px; /* Espaçamento superior */
-    transition: background-color 0.3s ease; /* Transição suave no hover */
-
-    &:hover:not(:disabled) {
-      background-color: $accent-orange-dark; /* Laranja mais escuro no hover */
+    .alert-error {
+      color: $error-color;
+      background-color: rgba($error-color, 0.15);
+      border: 1px solid rgba($error-color, 0.3);
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 20px;
+      text-align: left;
+      font-size: 0.9em;
     }
 
-    &:disabled {
-      background-color: rgba($accent-orange, 0.4); /* Laranja mais claro quando desabilitado */
-      cursor: not-allowed; /* Cursor de não permitido */
+    .alert-success {
+      color: $success-color;
+      background-color: rgba($success-color, 0.15);
+      border: 1px solid rgba($success-color, 0.3);
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 20px;
+      text-align: left;
+      font-size: 0.9em;
     }
   }
-
-  .alert-error {
-    color: $error-color;
-    background-color: rgba($error-color, 0.15);
-    border: 1px solid rgba($error-color, 0.3);
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 20px;
-    text-align: left;
-    font-size: 0.9em;
-  }
-
-  .alert-success {
-    color: $success-color;
-    background-color: rgba($success-color, 0.15);
-    border: 1px solid rgba($success-color, 0.3);
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 20px;
-    text-align: left;
-    font-size: 0.9em;
-  }
-}
 }
